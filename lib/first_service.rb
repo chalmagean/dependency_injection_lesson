@@ -1,6 +1,6 @@
 class FirstService
-  def initialize
-    @other_service = SecondService.new
+  def initialize(other_service)
+    @other_service = other_service
   end
 
   def my_method
@@ -20,4 +20,5 @@ class ThirdService
   end
 end
 
-puts FirstService.new.my_method
+other_service = SecondService.new
+puts FirstService.new(other_service).my_method
