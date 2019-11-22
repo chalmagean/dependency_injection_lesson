@@ -1,24 +1,45 @@
 class FirstService
-  def initialize(other_service)
+  def initialize(other_service, parser)
     @other_service = other_service
+    @parser = parser
   end
 
   def my_method
-    @other_service.other_method
+    @parser.parse(@other_service.other_method)
   end
 end
 
 class SecondService
+  attr_reader :name
+
+  def initialize(name)
+    @name = name
+  end
+
   def other_method
-    "I am the second service"
+    "My name is #{name}"
   end
 end
 
 class ThirdService
   def other_method
-    "I am the third service"
+    "Main Str. 1"
   end
 end
 
-other_service = SecondService.new
-puts FirstService.new(other_service).my_method
+class AddressParser
+  def self.parse(input)
+    input.downcase
+  end
+end
+
+class NameParser
+  def self.parse(input)
+    input.upcase
+  end
+end
+
+second_service = SecondService.new("John")
+third_service = ThirdService.new
+puts FirstService.new(second_service, NameParser).my_method
+puts FirstService.new(third_service, AddressParser).my_method
